@@ -59,3 +59,9 @@ All design tokens (colors, fonts) are CSS custom properties in `:root` at the to
 ## Tech
 
 Plain HTML5 + CSS3 + vanilla JavaScript. No dependencies, frameworks, or build step. Fonts loaded from Google Fonts (Bebas Neue, Work Sans, JetBrains Mono).
+
+<img width="1348" height="497" alt="1" src="https://github.com/user-attachments/assets/4ed131d3-bd1a-4e6b-befd-2cf831e6b6b2" />
+<img width="1323" height="475" alt="2" src="https://github.com/user-attachments/assets/65ad702d-5bd4-472a-abdf-263496abd1ce" />
+<img width="1336" height="571" alt="3" src="https://github.com/user-attachments/assets/656f0c35-7925-40fc-9ebc-026a5bea02df" />
+
+
