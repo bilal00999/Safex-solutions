@@ -6,8 +6,7 @@ A single-page, self-contained HTML catalog for browsing SafeX's workplace safety
 
 | File                    | Description                                                                                            |
 | ----------------------- | ------------------------------------------------------------------------------------------------------ |
-| `safex-catalog-v2.html` | The current version — dark "job-site permit tag" styling. Open directly in any browser, no build step. |
-| `safex-catalog.html`    | Earlier light/corporate styled version, kept for reference.                                            |
+| `safex-catalog.html` | The current version — dark "job-site permit tag" styling. Open directly in any browser, no build step. |
 
 ## Features
 
