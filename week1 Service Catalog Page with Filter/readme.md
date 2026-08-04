@@ -23,7 +23,7 @@ A single-page, self-contained HTML catalog for browsing SafeX's workplace safety
 
 ## How to use
 
-1. Open `safex-catalog-v2.html` in any modern browser — no server or build tools required.
+1. Open `safex-catalog.html` in any modern browser — no server or build tools required.
 2. Type in the search box to filter by keyword.
 3. Click a category chip to narrow by category; click it again or click `All` to reset.
 4. Result count (top right of the search bar) shows how many services match out of the total.
