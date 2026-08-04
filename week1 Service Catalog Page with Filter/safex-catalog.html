@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SafeX — Service Catalog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --asphalt: #18181a;
+        --panel: #221f1c;
+        --panel-2: #2a2622;
+        --orange: #ff6a1a;
+        --yellow: #f5c518;
+        --concrete: #edeae3;
+        --muted: #9b958a;
+        --red: #e13a3a;
+        --line: #3a352e;
+
+        --cat-audit: #3ec6e0;
+        --cat-training: #f5c518;
+        --cat-equip: #7ed957;
+        --cat-compliance: #ff6a1a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background:
+          radial-gradient(
+              circle at 1px 1px,
+              rgba(255, 255, 255, 0.035) 1px,
+              transparent 0
+            )
+            0 0/22px 22px,
+          var(--asphalt);
+        color: var(--concrete);
+        font-family: "Work Sans", sans-serif;
+        min-height: 100vh;
+      }
+
+      .hazard-strip {
+        height: 14px;
+        width: 100%;
+        background: repeating-linear-gradient(
+          135deg,
+          var(--yellow) 0 22px,
+          var(--asphalt) 22px 44px
+        );
+      }
+
+      header.top {
+        padding: 56px 6vw 42px;
+        border-bottom: 1px solid var(--line);
+        position: relative;
+        overflow: hidden;
+      }
+      .stamp {
+        position: absolute;
+        top: 40px;
+        right: 6vw;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--muted);
+        border: 1px solid var(--line);
+        padding: 10px 14px;
+        letter-spacing: 0.08em;
+        text-align: right;
+        transform: rotate(2deg);
+        display: none;
+      }
+      @media (min-width: 900px) {
+        .stamp {
+          display: block;
+        }
+      }
+      .eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--orange);
+        margin: 0 0 16px;
+      }
+      .eyebrow::before {
+        content: "● ";
+      }
+      h1 {
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-size: clamp(52px, 9vw, 110px);
+        line-height: 0.86;
+        letter-spacing: 0.01em;
+        margin: 0 0 18px;
+        color: var(--concrete);
+        text-transform: uppercase;
+      }
+      h1 span {
+        color: var(--orange);
+      }
+      .sub {
+        font-size: 15.5px;
+        color: var(--muted);
+        max-width: 520px;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      main {
+        padding: 40px 6vw 90px;
+        max-width: 1320px;
+        margin: 0 auto;
+      }
+
+      /* control deck */
+      .controls {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        padding: 22px 22px 20px;
+        margin-bottom: 38px;
+      }
+      .search-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 2px solid var(--line);
+        padding-bottom: 16px;
+        margin-bottom: 18px;
+      }
+      .search-row svg {
+        flex: none;
+        color: var(--orange);
+      }
+      .search-row input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-family: "Work Sans", sans-serif;
+        font-size: 16px;
+        color: var(--concrete);
+      }
+      .search-row input::placeholder {
+        color: #6b665d;
+      }
+      .result-count {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+        white-space: nowrap;
+        background: var(--panel-2);
+        padding: 5px 10px;
+        border: 1px solid var(--line);
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .chip {
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 9px 16px;
+        border: 2px solid var(--line);
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.12s ease;
+        clip-path: polygon(0 0, 100% 0, 100% 70%, 96% 100%, 0 100%);
+      }
+      .chip:hover {
+        border-color: var(--orange);
+        color: var(--concrete);
+      }
+      .chip[aria-pressed="true"] {
+        background: var(--chip-color, var(--orange));
+        border-color: var(--chip-color, var(--orange));
+        color: #18181a;
+      }
+
+      /* grid */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      @media (max-width: 1020px) {
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .stamp {
+          display: none;
+        }
+      }
+
+      /* permit-tag card */
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        position: relative;
+        padding: 24px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        transition:
+          transform 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .card::before {
+        /* punch hole */
+        content: "";
+        position: absolute;
+        top: 18px;
+        left: 20px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--asphalt);
+        border: 2px solid var(--line);
+      }
+      .card::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 52px;
+        border-top: 2px dashed var(--line);
+      }
+      .card:hover {
+        transform: translateY(-3px) rotate(-0.4deg);
+        border-color: var(--cat-color, var(--orange));
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-left: 26px;
+        padding-top: 2px;
+      }
+      .code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+      }
+      .cat-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--asphalt);
+        background: var(--cat-color, var(--orange));
+        padding: 4px 9px;
+        white-space: nowrap;
+      }
+
+      .card h3 {
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-size: 26px;
+        letter-spacing: 0.01em;
+        margin: 6px 0 0;
+        line-height: 1.05;
+        color: var(--concrete);
+        text-transform: uppercase;
+      }
+      .card p {
+        font-size: 13.5px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin: 0;
+        flex: 1;
+      }
+
+      .card-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+      }
+      .duration {
+        color: var(--muted);
+      }
+      .duration::before {
+        content: "⏱ ";
+      }
+      .req-btn {
+        background: none;
+        border: none;
+        color: var(--cat-color, var(--orange));
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0;
+      }
+      .req-btn:hover {
+        color: var(--concrete);
+      }
+
+      .empty {
+        grid-column: 1/-1;
+        text-align: center;
+        padding: 70px 20px;
+        color: var(--muted);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        border: 2px dashed var(--line);
+      }
+      .empty strong {
+        display: block;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 30px;
+        letter-spacing: 0.02em;
+        color: var(--concrete);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+      }
+
+      ::selection {
+        background: var(--orange);
+        color: #18181a;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .card {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hazard-strip"></div>
+
+    <header class="top">
+      <div class="stamp">FORM SX-100<br />REV. 08/2026<br />SITE READY</div>
+      <p class="eyebrow">SafeX / Service Catalog</p>
+      <h1>Work<br />site<br /><span>safety.</span></h1>
+      <p class="sub">
+        Certified audits, training, equipment, and compliance - dispatched to
+        your site. Filter by category or search below.
+      </p>
+    </header>
+
+    <main>
+      <div class="controls">
+        <div class="search-row">
+          <svg
+            width="19"
+            height="19"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="SEARCH — confined space, PPE, drill…"
+            aria-label="Search services"
+          />
+          <span class="result-count" id="resultCount"></span>
+        </div>
+        <div class="chip-row" id="chipRow"></div>
+      </div>
+
+      <div class="grid" id="grid"></div>
+    </main>
+
+    <script>
+      const services = [
+        {
+          code: "SX-01",
+          title: "Facility Safety Audit",
+          category: "Audits & Inspections",
+          desc: "Full-site walkthrough identifying hazards, code violations, and corrective actions, with a scored report.",
+          duration: "1 day",
+        },
+        {
+          code: "SX-02",
+          title: "Fire Safety Training",
+          category: "Training & Certification",
+          desc: "Hands-on extinguisher use, evacuation planning, and fire-warden certification for staff teams.",
+          duration: "4 hrs",
+        },
+        {
+          code: "SX-03",
+          title: "PPE Supply & Fitting",
+          category: "Equipment & Supply",
+          desc: "On-site fitting and bulk supply of helmets, respirators, harnesses, and protective clothing.",
+          duration: "2–5 days",
+        },
+        {
+          code: "SX-04",
+          title: "Confined Space Entry Certification",
+          category: "Training & Certification",
+          desc: "Permit-required entry procedures, atmospheric testing, and rescue protocol certification.",
+          duration: "1 day",
+        },
+        {
+          code: "SX-05",
+          title: "Hazmat Handling Compliance",
+          category: "Compliance & Consulting",
+          desc: "Documentation review and staff briefing for storage, labeling, and transport of hazardous materials.",
+          duration: "3 hrs",
+        },
+        {
+          code: "SX-06",
+          title: "Emergency Response Drills",
+          category: "Training & Certification",
+          desc: "Simulated emergency scenarios — fire, spill, medical — with timed response evaluation.",
+          duration: "Half day",
+        },
+        {
+          code: "SX-07",
+          title: "Machine Guarding Inspection",
+          category: "Audits & Inspections",
+          desc: "Verification of guarding, lockout/tagout systems, and moving-part hazard controls on the floor.",
+          duration: "1 day",
+        },
+        {
+          code: "SX-08",
+          title: "Ergonomics Assessment",
+          category: "Compliance & Consulting",
+          desc: "Workstation and task analysis to reduce repetitive-strain risk, with a remediation plan.",
+          duration: "2 hrs",
+        },
+      ];
+
+      const catColor = {
+        "Audits & Inspections": "var(--cat-audit)",
+        "Training & Certification": "var(--cat-training)",
+        "Equipment & Supply": "var(--cat-equip)",
+        "Compliance & Consulting": "var(--cat-compliance)",
+      };
+
+      const categories = ["All", ...new Set(services.map((s) => s.category))];
+
+      let activeCategory = "All";
+      let searchTerm = "";
+
+      const chipRow = document.getElementById("chipRow");
+      const grid = document.getElementById("grid");
+      const searchInput = document.getElementById("searchInput");
+      const resultCount = document.getElementById("resultCount");
+
+      function renderChips() {
+        chipRow.innerHTML = categories
+          .map((cat) => {
+            const pressed = cat === activeCategory;
+            const color = cat !== "All" ? catColor[cat] : "var(--orange)";
+            return `<button class="chip" data-cat="${cat}" aria-pressed="${pressed}" style="--chip-color:${color}">${cat}</button>`;
+          })
+          .join("");
+
+        chipRow.querySelectorAll(".chip").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            activeCategory = btn.dataset.cat;
+            renderChips();
+            renderGrid();
+          });
+        });
+      }
+
+      function renderGrid() {
+        const term = searchTerm.trim().toLowerCase();
+        const filtered = services.filter((s) => {
+          const matchesCat =
+            activeCategory === "All" || s.category === activeCategory;
+          const matchesSearch =
+            !term ||
+            s.title.toLowerCase().includes(term) ||
+            s.desc.toLowerCase().includes(term) ||
+            s.category.toLowerCase().includes(term);
+          return matchesCat && matchesSearch;
+        });
+
+        resultCount.textContent = `${filtered.length} / ${services.length}`;
+
+        if (filtered.length === 0) {
+          grid.innerHTML = `<div class="empty"><strong>No matching services</strong>Try a different term or clear the category filter.</div>`;
+          return;
+        }
+
+        grid.innerHTML = filtered
+          .map(
+            (s) => `
+      <article class="card" style="--cat-color:${catColor[s.category]}">
+        <div class="card-top">
+          <span class="code">${s.code}</span>
+          <span class="cat-tag" style="--cat-color:${catColor[s.category]}">${s.category}</span>
+        </div>
+        <h3>${s.title}</h3>
+        <p>${s.desc}</p>
+        <div class="card-foot">
+          <span class="duration">${s.duration}</span>
+          <button class="req-btn" type="button" style="--cat-color:${catColor[s.category]}">Request →</button>
+        </div>
+      </article>
+    `,
+          )
+          .join("");
+      }
+
+      searchInput.addEventListener("input", (e) => {
+        searchTerm = e.target.value;
+        renderGrid();
+      });
+
+      renderChips();
+      renderGrid();
+    </script>
+  </body>
+</html>
