@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Acme Digital Studio</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-item" onclick="window.location.href = '#'">Home</div>
+        <div class="nav-item" onclick="window.location.href = '#services'">
+          Services
+        </div>
+        <div class="nav-item" onclick="window.location.href = '#contact'">
+          Contact
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <img src="assets/hero.jpg" alt="" />
+        <div class="hero-copy">
+          <h2>Get noticed online.</h2>
+          <p class="lead">
+            We build slick websites that turn traffic into leads for growing
+            brands.
+          </p>
+          <button class="cta" onclick="alert('Thanks!')">Book Now</button>
+          <button class="secondary" onclick="alert('You clicked learn more')">
+            Learn More
+          </button>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="stat-box" tabindex="0">3.2x</div>
+        <div class="stat-box" tabindex="0">48h</div>
+        <div class="stat-box" tabindex="0">92%</div>
+      </section>
+
+      <section id="services" class="services">
+        <div class="service-card">
+          <h3>Brand Strategy</h3>
+          <p>
+            Clear positioning and messaging for founders who want to stand out.
+          </p>
+        </div>
+        <div class="service-card">
+          <h3>Web Design</h3>
+          <p>
+            Conversion-focused design built to feel premium without the
+            friction.
+          </p>
+        </div>
+        <div class="service-card">
+          <h3>SEO Boost</h3>
+          <p>
+            Practical improvements that help pages rank and perform under
+            pressure.
+          </p>
+        </div>
+      </section>
+
+      <section class="testimonial">
+        <blockquote>
+          “Their team made our site faster, cleaner, and way easier to use.”
+        </blockquote>
+      </section>
+
+      <section id="contact" class="contact">
+        <form>
+          <input type="text" placeholder="Name" />
+          <input type="email" placeholder="Email" />
+          <textarea placeholder="Tell us about your project"></textarea>
+          <button style="background: #ff9800; color: #000">Send</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 Acme Digital Studio</p>
+    </footer>
+  </body>
+</html>

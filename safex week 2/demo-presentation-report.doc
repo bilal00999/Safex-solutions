@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo Presentation Report - Accessibility and Performance Audit</title>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --border: #e2e8f0;
+        --accent: #2563eb;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Segoe UI, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 28px;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 24px;
+      }
+      h1 { margin: 0 0 8px; font-size: 30px; }
+      h2 { margin: 26px 0 10px; font-size: 22px; }
+      p.lead { color: var(--muted); margin-top: 0; }
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin: 16px 0;
+      }
+      .meta div {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0 18px;
+      }
+      th, td {
+        border: 1px solid var(--border);
+        padding: 10px;
+        text-align: left;
+      }
+      th { background: #eff6ff; }
+      .delta-pos { color: #166534; font-weight: 700; }
+      .delta-neg { color: #b91c1c; font-weight: 700; }
+      ul { margin: 8px 0 16px; }
+      .shot {
+        margin: 14px 0 20px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .shot img {
+        width: 100%;
+        display: block;
+      }
+      .shot figcaption {
+        font-size: 13px;
+        color: var(--muted);
+        padding: 10px;
+      }
+      .pill {
+        display: inline-block;
+        border: 1px solid #bfdbfe;
+        background: #dbeafe;
+        color: #1d4ed8;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      @media print {
+        body { background: #fff; }
+        .wrap { padding: 0; }
+        .card { border: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="card">
+        <h1>Demo / Presentation Report</h1>
+        <p class="lead">Accessibility and Performance Audit - Before vs After Evidence Package</p>
+        <span class="pill">Prepared for Demo Presentation</span>
+
+        <div class="meta">
+          <div><strong>Baseline URL:</strong><br />http://localhost:8000/</div>
+          <div><strong>Redesigned URL:</strong><br />http://localhost:8001/</div>
+          <div><strong>Tools:</strong><br />Lighthouse CLI, axe-core CLI</div>
+          <div><strong>Status:</strong><br />Documentation Updated</div>
+        </div>
+
+        <h2>Before/After Lighthouse Scores</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Before</th>
+              <th>After</th>
+              <th>Delta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Performance</td>
+              <td>95</td>
+              <td>74</td>
+              <td class="delta-neg">-21</td>
+            </tr>
+            <tr>
+              <td>Accessibility</td>
+              <td>91</td>
+              <td>95</td>
+              <td class="delta-pos">+4</td>
+            </tr>
+            <tr>
+              <td>Best Practices</td>
+              <td>89</td>
+              <td>96</td>
+              <td class="delta-pos">+7</td>
+            </tr>
+            <tr>
+              <td>SEO</td>
+              <td>91</td>
+              <td>100</td>
+              <td class="delta-pos">+9</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Key Findings</h2>
+        <ul>
+          <li>Accessibility, best-practices, and SEO improved in the redesigned version.</li>
+          <li>Performance regressed due to heavier visual payload and asset-loading characteristics.</li>
+          <li>Latest axe-core run reports 0 violations for WCAG 2A/2AA tags.</li>
+        </ul>
+
+        <h2>Issues Table (Severity / Impact / Fix)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Severity</th>
+              <th>Issue</th>
+              <th>Impact</th>
+              <th>Fix / Recommendation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>High</td>
+              <td>Performance drop after redesign</td>
+              <td>Slower page experience and lower Lighthouse performance score</td>
+              <td>Optimize/replace heavy imagery, reduce external dependencies, retest</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>Console network warning (missing optional asset)</td>
+              <td>QA signal noise and best-practice quality risk</td>
+              <td>Add favicon and verify static asset references</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>Ongoing accessibility risk in dynamic interactions</td>
+              <td>Potential regression during future UI iterations</td>
+              <td>Keep Lighthouse + axe + keyboard regression checks in release flow</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Lighthouse Screenshot Evidence</h2>
+        <figure class="shot">
+          <img src="./screenshots/lighthouse-before.png" alt="Lighthouse before scores" />
+          <figcaption>Before: Lighthouse baseline score capture</figcaption>
+        </figure>
+
+        <figure class="shot">
+          <img src="./screenshots/lighthouse-after.png" alt="Lighthouse after scores" />
+          <figcaption>After: Lighthouse redesigned score capture</figcaption>
+        </figure>
+      </section>
+    </main>
+  </body>
+</html>
